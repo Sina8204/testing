@@ -35,4 +35,3 @@ class models:
 
     except Exception as e:
         return f"Error generating image: {e}"
-
