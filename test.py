@@ -5,7 +5,7 @@ bot = tb.TeleBot(TOKEN)
 
 @bot.message_handler(commands = ['start'])
 def welcome(message):
-  bot.send_message(message.chat.id , f'welcom dear?!!')
+  bot.send_message(message.chat.id , f'welcom dear')
 
 @bot.message_handler(commands = ['username'])
 def welcome(message):
