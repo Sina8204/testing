@@ -11,7 +11,7 @@ bot = tb.TeleBot(TOKEN)
 @bot.message_handler(commands=['start'])
 def start_cmd(message):
     text = content_creator.send_requiest_to_model(
-        "Write a beautiful welcome message",
+        "Write short messages",
         "Write a beautiful welcome message"
     )
     bot.send_message(message.chat.id, f"welcome dear\n{text}")
