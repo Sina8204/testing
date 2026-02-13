@@ -21,6 +21,15 @@ def start_cmd(message):
     except Exception as e:
         bot.send_message(message.chat.id, f"خطا در پردازش: {e}")
 
+@bot.message_handler(commands=['pic'])
+def send_picture(message):
+    img = content_creator.generate_image("یک تصویر زیبا از یک روباه در جنگل")
+
+    if isinstance(img, bytes):
+        bot.send_photo(message.chat.id, img)
+    else:
+        bot.send_message(message.chat.id, img)
+
 @bot.message_handler(commands=['username'])
 def username_cmd(message):
     username = message.from_user.username or "کاربر عزیز"
