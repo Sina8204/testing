@@ -3,15 +3,16 @@ from google import genai
 class models:
     def __init__(self, key):
         self.client = genai.Client(api_key=key)
-        self.response_text = ""
 
-    def send_requiest_to_model(self, instruction="", prompt=""):
+    def ask(self, system_instruction, prompt):
         try:
             response = self.client.models.generate_content(
                 model="gemini-2.5-flash",
-                config=genai.types.GenerateContentConfig(system_instruction=instruction),
+                config=genai.types.GenerateContentConfig(
+                    system_instruction=system_instruction
+                ),
                 contents=prompt
             )
-            return response.text
+            return response.text.strip()
         except Exception as e:
-            return f"Error: {e}"
+            return f"خطا در ارتباط با مدل: {e}"
