@@ -1,29 +1,36 @@
-from send_receave_request import models
 import telebot as tb
 import os
+from send_receave_request import models
 
 TOKEN = os.getenv("bt")
-Key = os.getenv("key")
+KEY = os.getenv("key")
 
-content_creator = models(key=Key)
 bot = tb.TeleBot(TOKEN)
+content_creator = models(key=KEY)
+
+# --- Handlers ---
 
 @bot.message_handler(commands=['start'])
 def start_cmd(message):
-    text = content_creator.send_requiest_to_model(
-        "Write short messages",
-        "Write a beautiful welcome message"
-    )
-    bot.send_message(message.chat.id, f"welcome dear\n{text}")
+    try:
+        text = content_creator.ask(
+            "پاسخ را فقط فارسی، کوتاه و حداکثر دو جمله بنویس.",
+            "یک پیام خوش‌آمدگویی زیبا بنویس."
+        )
+        bot.send_message(message.chat.id, text)
+    except Exception as e:
+        bot.send_message(message.chat.id, f"خطا در پردازش: {e}")
 
 @bot.message_handler(commands=['username'])
 def username_cmd(message):
-    username = message.from_user.username or "unknown"
-    bot.send_message(message.chat.id, f"welcome dear {username}")
+    username = message.from_user.username or "کاربر عزیز"
+    bot.send_message(message.chat.id, f"سلام {username}")
 
 @bot.message_handler(commands=['name'])
 def name_cmd(message):
-    bot.send_message(message.chat.id, f"welcome dear {message.from_user.first_name}")
+    name = message.from_user.first_name or "دوست من"
+    bot.send_message(message.chat.id, f"سلام {name}")
 
+# --- Start Bot ---
 bot.delete_webhook()
-bot.polling(none_stop=True)
+bot.polling(none_stop=True, interval=0)
