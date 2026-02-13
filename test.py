@@ -1,5 +1,7 @@
 import telebot as tb
-bot = tb.TeleBot('8064045709:AAFd6qIg8UdrsyooR9o27E7n6hHPEeSvYO8')
+import os
+TOKEN = os.getenv("bt")
+bot = tb.TeleBot(TOKEN)
 
 @bot.message_handler(commands = ['start'])
 def welcome(message):
